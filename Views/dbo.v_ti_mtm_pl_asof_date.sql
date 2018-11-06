@@ -1,0 +1,156 @@
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
+
+CREATE view [dbo].[v_ti_mtm_pl_asof_date]
+(
+   trade_num,
+   order_num,
+   item_num,
+   pl_asof_date,
+   acct_num,
+   real_port_num,
+   trader_init,
+   creation_date,
+   contr_date,
+   order_type_code,
+   booking_comp_num,
+   p_s_ind,
+   cmdty_code,
+   risk_mkt_code,	
+   ti_last_trade_date,	
+   last_trade_date,
+   contr_qty,	
+   contr_qty_uom_code,
+   contr_qty_periodicity,
+   open_qty,	
+   ti_trans_id,	
+   dist_num,
+   open_pl,
+   closed_pl,	
+   addl_cost_sum,
+   delta,
+   tid_trans_id,
+   vega,	
+   volatility,
+   theta,
+   curr_conv_rate,
+   interest_rate,
+   price_diff_value,
+   dist_qty,
+   alloc_qty,
+   trade_value,	
+   market_value,
+   curr_code,
+   qty_uom_code,
+   gamma,
+   discount_factor,
+   rho,
+   drift,
+   trade_modified_ind,
+   tid_commkt_key,
+   pos_num,
+   qty_uom_code_conv_to,
+   sec_qty_uom_code,
+   sec_conversion_factor,
+   trading_prd,
+   tid_last_trade_date,
+   dist_type,
+   tid_p_s_ind,
+   accum_num,
+   qpp_num,
+   quote_start_date,
+   quote_end_date,
+   num_of_pricing_days,
+   num_of_days_priced,
+   open_price,
+   priced_price,
+   price_curr_code,
+   price_uom_code,
+   qpp_trans_id
+)
+as
+select distinct 
+   timtm.trade_num, 
+   timtm.order_num, 
+   timtm.item_num, 
+   timtm.mtm_pl_asof_date,
+   timtm.acct_num,
+   timtm.real_port_num,
+   timtm.trader_init,
+   timtm.creation_date,
+   timtm.contr_date,
+   timtm.order_type_code,
+   timtm.booking_comp_num,
+   timtm.p_s_ind,
+   timtm.cmdty_code,
+   timtm.risk_mkt_code,	
+   timtm.trading_prd,	
+   timtm.last_trade_date,
+   timtm.contr_qty,	
+   timtm.contr_qty_uom_code,
+   timtm.contr_qty_periodicity,
+   timtm.open_qty,	
+   timtm.trans_id,	
+   tidmtm.dist_num,
+   tidmtm.open_pl,
+   tidmtm.closed_pl,	
+   tidmtm.addl_cost_sum,
+   tidmtm.delta,
+   tidmtm.trans_id,
+   tidmtm.vega,	
+   tidmtm.volatility,
+   tidmtm.theta,
+   tidmtm.curr_conv_rate,
+   tidmtm.interest_rate,
+   tidmtm.price_diff_value,
+   tidmtm.dist_qty,
+   tidmtm.alloc_qty,
+   tidmtm.trade_value,	
+   tidmtm.market_value,
+   tidmtm.curr_code,
+   tidmtm.qty_uom_code,
+   tidmtm.gamma,
+   tidmtm.discount_factor,
+   tidmtm.rho,
+   tidmtm.drift,
+   tidmtm.trade_modified_ind,
+   tidmtm.commkt_key,
+   tidmtm.pos_num,
+   tidmtm.qty_uom_code_conv_to,
+   tidmtm.sec_qty_uom_code,
+   tidmtm.sec_conversion_factor,
+   tidmtm.trading_prd,
+   tidmtm.last_trade_date,
+   tidmtm.dist_type,
+   tidmtm.p_s_ind,
+   qppmtm.accum_num,
+   qppmtm.qpp_num,
+   qppmtm.quote_start_date,
+   qppmtm.quote_end_date,
+   qppmtm.num_of_pricing_days,
+   qppmtm.num_of_days_priced,
+   qppmtm.open_price,
+   qppmtm.priced_price,
+   qppmtm.price_curr_code,
+   qppmtm.price_uom_code,
+   qppmtm.trans_id
+from dbo.ti_mark_to_market timtm
+        inner join dbo.tid_mark_to_market tidmtm
+           on tidmtm.trade_num = timtm.trade_num and 
+              tidmtm.order_num = timtm.order_num and 
+              tidmtm.item_num = timtm.item_num and 
+              tidmtm.mtm_pl_asof_date = timtm.mtm_pl_asof_date
+        left outer join dbo.qpp_mark_to_market qppmtm
+           on timtm.trade_num = qppmtm.trade_num and 
+              timtm.order_num = qppmtm.order_num and 
+              timtm.item_num = qppmtm.item_num and 
+              timtm.mtm_pl_asof_date = qppmtm.mtm_pl_asof_date     
+GO
+GRANT SELECT ON  [dbo].[v_ti_mtm_pl_asof_date] TO [admin_group]
+GO
+GRANT SELECT ON  [dbo].[v_ti_mtm_pl_asof_date] TO [next_usr]
+GO
+EXEC sp_addextendedproperty N'SymphonyProduct', N'OIL', 'SCHEMA', N'dbo', 'VIEW', N'v_ti_mtm_pl_asof_date', NULL, NULL
+GO

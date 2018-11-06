@@ -1,0 +1,2 @@
+CREATE USER [icts_java] WITHOUT LOGIN
+GO

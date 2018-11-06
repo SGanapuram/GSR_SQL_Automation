@@ -1,0 +1,94 @@
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
+
+CREATE view [dbo].[v_ai_est_actual_rev]
+(
+   alloc_num,
+   alloc_item_num,
+   ai_est_actual_num,
+   ai_est_actual_date,
+   ai_est_actual_gross_qty,
+   ai_gross_qty_uom_code,
+   ai_est_actual_net_qty,
+   ai_net_qty_uom_code,
+   ai_est_actual_short_cmnt,
+   ai_est_actual_ind,
+   ticket_num,
+   lease_num,
+   dest_trade_num,
+   del_loc_code,
+   scac_carrier_code,
+   transporter_code,
+   bol_code,
+   owner_code,
+   accum_num,
+   secondary_actual_gross_qty,
+   secondary_actual_net_qty,
+   secondary_qty_uom_code,
+   manual_input_sec_ind,
+   fixed_swing_qty_ind,
+   insert_sequence,
+   mot_code,
+   tertiary_gross_qty,
+   tertiary_net_qty,
+   tertiary_uom_code,
+   actual_tax_mt_qty,
+   actual_tax_m315_qty,
+   start_load_date,
+   stop_load_date,
+   sap_position_num,
+   assay_final_ind,
+   trans_id,
+   asof_trans_id,
+   resp_trans_id
+)
+as
+select
+   alloc_num,
+   alloc_item_num,
+   ai_est_actual_num,
+   ai_est_actual_date,
+   ai_est_actual_gross_qty,
+   ai_gross_qty_uom_code,
+   ai_est_actual_net_qty,
+   ai_net_qty_uom_code,
+   ai_est_actual_short_cmnt,
+   ai_est_actual_ind,
+   ticket_num,
+   lease_num,
+   dest_trade_num,
+   del_loc_code,
+   scac_carrier_code,
+   transporter_code,
+   bol_code,
+   owner_code,
+   accum_num,
+   secondary_actual_gross_qty,
+   secondary_actual_net_qty,
+   secondary_qty_uom_code,
+   manual_input_sec_ind,
+   fixed_swing_qty_ind,
+   insert_sequence,
+   mot_code,
+   tertiary_gross_qty,
+   tertiary_net_qty,
+   tertiary_uom_code,
+   actual_tax_mt_qty,
+   actual_tax_m315_qty,
+   start_load_date,
+   stop_load_date,
+   sap_position_num,
+   assay_final_ind,
+   trans_id,
+   trans_id,
+   resp_trans_id
+from dbo.aud_ai_est_actual
+GO
+GRANT SELECT ON  [dbo].[v_ai_est_actual_rev] TO [admin_group]
+GO
+GRANT SELECT ON  [dbo].[v_ai_est_actual_rev] TO [next_usr]
+GO
+EXEC sp_addextendedproperty N'SymphonyProduct', N'OIL', 'SCHEMA', N'dbo', 'VIEW', N'v_ai_est_actual_rev', NULL, NULL
+GO

@@ -1,0 +1,2 @@
+CREATE USER [ictsbackup] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[ictsbackup]
+GO

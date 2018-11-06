@@ -1,0 +1,131 @@
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
+
+CREATE view [dbo].[allocation_detail]
+(
+	 alloc_num,
+	 alloc_type_code,				
+	 mot_code,						
+	 sch_init,						
+	 alloc_status,
+	 alloc_cmnt_num,				
+	 alloc_item_num,
+	 alloc_item_type,
+	 alloc_item_status,
+	 sub_alloc_num,
+	 trade_num,						
+	 order_num,
+	 item_num,
+	 acct_num,						
+	 cmdty_code,					
+	 sch_qty,
+	 sch_qty_uom_code,				
+	 nomin_date_from,
+	 nomin_date_to,
+	 nomin_qty_min,
+	 nomin_qty_min_uom_code,		
+	 nomin_qty_max,
+	 nomin_qty_max_uom_code,		
+	 title_tran_loc_code,			
+	 origin_loc_code,				
+	 title_tran_date,
+	 credit_term_code,				
+	 pay_term_code,					
+	 pay_days,
+	 del_term_code,					
+	 alloc_item_cmnt_num,			
+	 alloc_item_confirm,
+	 alloc_item_verify,
+	 sch_qty_periodicity,
+	 final_dest_loc_code,
+	 transportation,
+	 parcel_num,
+	 x_transportation,
+	 barge_name,
+	 fsc_ind,
+	 lay_days_start_date,
+	 lay_days_end_date,
+	 eta_date,
+	 bl_date,
+	 nor_date,
+	 load_cmnc_date,
+	 load_compl_date,
+	 disch_cmnc_date,
+	 disch_compl_date,
+	 batch_num,
+	 fully_actualized,
+   inv_num,
+   creation_date,
+   trans_id
+)
+as
+select
+   alh.alloc_num,
+	 alh.alloc_type_code,
+	 alh.mot_code,
+	 alh.sch_init,
+	 alh.alloc_status,
+	 alh.cmnt_num,
+	 ali.alloc_item_num,
+	 ali.alloc_item_type,
+	 ali.alloc_item_status,
+	 ali.sub_alloc_num,
+	 ali.trade_num,
+	 ali.order_num,
+	 ali.item_num,
+	 ali.acct_num,
+	 ali.cmdty_code,
+	 ali.sch_qty,
+	 ali.sch_qty_uom_code,
+	 ali.nomin_date_from,
+	 ali.nomin_date_to,
+	 ali.nomin_qty_min,
+	 ali.nomin_qty_min_uom_code,
+	 ali.nomin_qty_max,
+	 ali.nomin_qty_max_uom_code,
+	 ali.title_tran_loc_code,
+	 ali.origin_loc_code,
+	 ali.title_tran_date,
+	 ali.credit_term_code,
+	 ali.pay_term_code,
+	 ali.pay_days,
+	 ali.del_term_code,
+	 ali.cmnt_num,
+   ali.alloc_item_confirm,
+   ali.alloc_item_verify,
+   ali.sch_qty_periodicity,
+   ali.final_dest_loc_code,
+	 alt.transportation,
+	 alt.parcel_num,
+	 alt.x_transportation,
+	 alt.barge_name,
+	 alt.fsc_ind,
+	 alt.lay_days_start_date,
+	 alt.lay_days_end_date,
+	 alt.eta_date,
+	 alt.bl_date,
+	 alt.nor_date,
+	 alt.load_cmnc_date,
+	 alt.load_compl_date,
+	 alt.disch_cmnc_date,
+	 alt.disch_compl_date,
+	 alh.ppl_batch_num,
+   ali.fully_actualized,
+   ali.inv_num,
+   alh.creation_date,
+   ali.trans_id
+from dbo.allocation alh
+        inner join dbo.allocation_item ali
+           on alh.alloc_num = ali.alloc_num
+        left outer join dbo.allocation_item_transport alt
+           on ali.alloc_num = alt.alloc_num and 
+              ali.alloc_item_num = alt.alloc_item_num      
+GO
+GRANT SELECT ON  [dbo].[allocation_detail] TO [admin_group]
+GO
+GRANT SELECT ON  [dbo].[allocation_detail] TO [next_usr]
+GO
+EXEC sp_addextendedproperty N'SymphonyProduct', N'OIL', 'SCHEMA', N'dbo', 'VIEW', N'allocation_detail', NULL, NULL
+GO
