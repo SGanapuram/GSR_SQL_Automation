@@ -12,12 +12,12 @@ CREATE TABLE [dbo].[account]
 [acct_sub_type_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
 [trans_id] [int] NOT NULL,
 [contract_cmnt_num] [int] NULL,
-[man_input_sec_qty_required] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL CONSTRAINT [DF__account__man_inp__7E6CC920] DEFAULT ('N'),
+[man_input_sec_qty_required] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL CONSTRAINT [DF__account__man_inp__0F975522] DEFAULT ('N'),
 [legal_entity_num] [int] NULL,
 [risk_transfer_ind_code] [char] (2) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
 [govt_code] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
-[allows_netout] [bit] NOT NULL CONSTRAINT [DF__account__allows___00551192] DEFAULT ((0)),
-[allows_bookout] [bit] NOT NULL CONSTRAINT [DF__account__allows___014935CB] DEFAULT ((0)),
+[allows_netout] [bit] NOT NULL CONSTRAINT [DF__account__allows___117F9D94] DEFAULT ((0)),
+[allows_bookout] [bit] NOT NULL CONSTRAINT [DF__account__allows___1273C1CD] DEFAULT ((0)),
 [master_agreement_date] [datetime] NULL
 ) ON [PRIMARY]
 GO
@@ -323,7 +323,7 @@ if @dummy_update = 0
 
 return
 GO
-ALTER TABLE [dbo].[account] ADD CONSTRAINT [CK__account__man_inp__7F60ED59] CHECK (([man_input_sec_qty_required]='N' OR [man_input_sec_qty_required]='Y'))
+ALTER TABLE [dbo].[account] ADD CONSTRAINT [CK__account__man_inp__108B795B] CHECK (([man_input_sec_qty_required]='N' OR [man_input_sec_qty_required]='Y'))
 GO
 ALTER TABLE [dbo].[account] ADD CONSTRAINT [account_pk] PRIMARY KEY CLUSTERED  ([acct_num]) ON [PRIMARY]
 GO

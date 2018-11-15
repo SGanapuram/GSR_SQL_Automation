@@ -5,7 +5,7 @@
   <DefaultSchema>dbo</DefaultSchema>
   <DefaultUser>dbo</DefaultUser>
   <DefaultFilegroup>PRIMARY</DefaultFilegroup>
-  <DatabaseVersion>11</DatabaseVersion>
+  <DatabaseVersion>13</DatabaseVersion>
   <IsAzure>False</IsAzure>
   <MaxDataFileSize>10485760</MaxDataFileSize>
   <WriteToFileOptions>
@@ -57,8 +57,10 @@
     <DataWriteAllFilesInOneDirectory>True</DataWriteAllFilesInOneDirectory>
   </WriteToFileOptions>
   <DataFileSet>
-    <Count>2</Count>
+    <Count>4</Count>
     <DataFile>dbo.account_Data.sql</DataFile>
     <DataFile>dbo.account_address_Data.sql</DataFile>
+    <DataFile>dbo.bank_credit_alarm_log_Data.sql</DataFile>
+    <DataFile>dbo.bank_exposure_Data.sql</DataFile>
   </DataFileSet>
 </DatabaseInformation>
