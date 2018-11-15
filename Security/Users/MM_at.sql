@@ -1,5 +1,0 @@
-IF NOT EXISTS (SELECT * FROM master.dbo.syslogins WHERE loginname = N'MM\at')
-CREATE LOGIN [MM\at] FROM WINDOWS
-GO
-CREATE USER [MM\at] FOR LOGIN [MM\at]
-GO

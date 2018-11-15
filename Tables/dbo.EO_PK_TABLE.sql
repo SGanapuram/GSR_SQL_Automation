@@ -1,6 +1,0 @@
-CREATE TABLE [dbo].[EO_PK_TABLE]
-(
-[NAME] [char] (40) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
-[PK] [int] NULL
-) ON [PRIMARY]
-GO
