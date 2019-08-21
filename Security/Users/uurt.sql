@@ -1,0 +1,2 @@
+CREATE USER [uurt] FOR LOGIN [uurt]
+GO

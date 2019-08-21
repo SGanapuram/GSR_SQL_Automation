@@ -1,0 +1,129 @@
+CREATE TABLE [dbo].[allocation_item]
+(
+[alloc_num] [int] NOT NULL,
+[alloc_item_num] [smallint] NOT NULL,
+[alloc_item_type] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NOT NULL,
+[alloc_item_status] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NOT NULL CONSTRAINT [df_allocation_item_alloc_item_status] DEFAULT ('I'),
+[sub_alloc_num] [smallint] NULL,
+[trade_num] [int] NULL,
+[order_num] [smallint] NULL,
+[item_num] [smallint] NULL,
+[acct_num] [int] NOT NULL,
+[cmdty_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NOT NULL,
+[sch_qty] [float] NULL,
+[sch_qty_uom_code] [char] (4) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[nomin_date_from] [datetime] NOT NULL,
+[nomin_date_to] [datetime] NOT NULL,
+[nomin_qty_min] [float] NULL,
+[nomin_qty_min_uom_code] [char] (4) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[nomin_qty_max] [float] NULL,
+[nomin_qty_max_uom_code] [char] (4) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[title_tran_loc_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[title_tran_date] [datetime] NULL,
+[origin_loc_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[dest_loc_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[credit_term_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[pay_term_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[pay_days] [smallint] NULL,
+[del_term_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[cr_clear_ind] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[cr_anly_init] [char] (3) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[alloc_item_short_cmnt] [varchar] (40) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[cmnt_num] [int] NULL,
+[alloc_item_confirm] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[alloc_item_verify] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[sch_qty_periodicity] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[auto_receipt_ind] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[actual_gross_qty] [float] NULL,
+[actual_gross_uom_code] [char] (4) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[fully_actualized] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[ar_alloc_num] [int] NULL,
+[ar_alloc_item_num] [smallint] NULL,
+[inv_num] [int] NULL,
+[insp_acct_num] [int] NULL,
+[confirmation_date] [datetime] NULL,
+[net_nom_num] [smallint] NULL,
+[recap_item_num] [int] NULL,
+[auto_receipt_actual_ind] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[acct_ref_num] [varchar] (40) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[final_dest_loc_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[lc_num] [int] NULL,
+[reporting_date] [datetime] NULL,
+[max_ai_est_actual_num] [smallint] NULL,
+[inspection_date] [datetime] NULL,
+[inspector_percent] [smallint] NULL,
+[auto_sampling_ind] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[auto_sampling_comp_num] [int] NULL,
+[ship_agent_comp_num] [int] NULL,
+[ship_broker_comp_num] [int] NULL,
+[secondary_actual_qty] [float] NULL,
+[load_port_loc_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[sec_actual_uom_code] [char] (4) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[purchasing_group] [varchar] (15) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[trans_id] [int] NOT NULL,
+[vat_ind] [bit] NULL CONSTRAINT [df_allocation_item_vat_ind] DEFAULT ((0)),
+[imp_rec_ind] [char] (1) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[imp_rec_reason_oid] [int] NULL,
+[estimate_event_date] [datetime] NULL,
+[finance_bank_num] [int] NULL,
+[sap_delivery_num] [varchar] (16) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[sap_delivery_line_item_num] [varchar] (16) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[transfer_price] [numeric] (20, 8) NULL,
+[transfer_price_uom_code] [char] (4) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[transfer_price_curr_code] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[transfer_price_curr_code_to] [char] (8) COLLATE SQL_Latin1_General_CP1_CS_AS NULL,
+[transfer_price_currency_rate] [float] NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_pk] PRIMARY KEY CLUSTERED  ([alloc_num], [alloc_item_num]) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [allocation_item_idx2] ON [dbo].[allocation_item] ([alloc_num], [trans_id]) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [allocation_item_idx3] ON [dbo].[allocation_item] ([inv_num], [trans_id]) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [allocation_item_idx1] ON [dbo].[allocation_item] ([trade_num], [order_num], [item_num], [trans_id]) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk1] FOREIGN KEY ([acct_num]) REFERENCES [dbo].[account] ([acct_num])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk11] FOREIGN KEY ([dest_loc_code]) REFERENCES [dbo].[location] ([loc_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk12] FOREIGN KEY ([final_dest_loc_code]) REFERENCES [dbo].[location] ([loc_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk13] FOREIGN KEY ([origin_loc_code]) REFERENCES [dbo].[location] ([loc_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk14] FOREIGN KEY ([title_tran_loc_code]) REFERENCES [dbo].[location] ([loc_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk15] FOREIGN KEY ([pay_term_code]) REFERENCES [dbo].[payment_term] ([pay_term_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk18] FOREIGN KEY ([sch_qty_uom_code]) REFERENCES [dbo].[uom] ([uom_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk19] FOREIGN KEY ([nomin_qty_min_uom_code]) REFERENCES [dbo].[uom] ([uom_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk2] FOREIGN KEY ([insp_acct_num]) REFERENCES [dbo].[account] ([acct_num])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk20] FOREIGN KEY ([nomin_qty_max_uom_code]) REFERENCES [dbo].[uom] ([uom_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk21] FOREIGN KEY ([actual_gross_uom_code]) REFERENCES [dbo].[uom] ([uom_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk22] FOREIGN KEY ([sec_actual_uom_code]) REFERENCES [dbo].[uom] ([uom_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk25] FOREIGN KEY ([finance_bank_num]) REFERENCES [dbo].[account] ([acct_num])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk26] FOREIGN KEY ([transfer_price_curr_code_to]) REFERENCES [dbo].[commodity] ([cmdty_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk5] FOREIGN KEY ([cmdty_code]) REFERENCES [dbo].[commodity] ([cmdty_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk6] FOREIGN KEY ([credit_term_code]) REFERENCES [dbo].[credit_term] ([credit_term_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk7] FOREIGN KEY ([del_term_code]) REFERENCES [dbo].[delivery_term] ([del_term_code])
+GO
+ALTER TABLE [dbo].[allocation_item] ADD CONSTRAINT [allocation_item_fk8] FOREIGN KEY ([cr_anly_init]) REFERENCES [dbo].[icts_user] ([user_init])
+GO
+GRANT DELETE ON  [dbo].[allocation_item] TO [next_usr]
+GO
+GRANT INSERT ON  [dbo].[allocation_item] TO [next_usr]
+GO
+GRANT SELECT ON  [dbo].[allocation_item] TO [next_usr]
+GO
+GRANT UPDATE ON  [dbo].[allocation_item] TO [next_usr]
+GO
